@@ -5,8 +5,9 @@ export async function getRegister(req, res) {
     try {
         const session = res.locals.session;
         const registers = await db.collection('registers').find({userId: new ObjectId(session.userId)}).toArray();
+        const user = await db.collection('users').findOne({_id: new ObjectId(session.userId)});
         registers.forEach(register => delete register.userId);
-        res.send(registers);
+        res.send({user: user.name, registers: [...registers]});
     } catch(error) {
         res.send('Algo de errado não está certo.');
     }

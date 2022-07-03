@@ -17,7 +17,6 @@ export async function creatUser(req, res) {
 
 export async function loginUser(req, res) {
     try {
-        const user = req.body;
         const token = uuid();
         const validEmail = res.locals.validEmail
             

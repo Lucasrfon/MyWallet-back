@@ -14,7 +14,7 @@ export default async function validateLogin(req, res, next) {
     bcrypt.compareSync(user.password, validEmail.password) : null;
 
     if(validation.error) {
-        return res.status(400).send(validation.error.details);
+        return res.status(406).send(validation.error.details[0].message);
     }
 
     if(!validPassword) {
