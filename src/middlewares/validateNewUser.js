@@ -1,5 +1,5 @@
-import { db } from '../dbStrategy/mongo.js';
 import joi from 'joi';
+import { db } from '../dbStrategy/mongo.js';
 
 export default async function validateNewUser(req, res, next) {
     const newUserSchema = joi.object({

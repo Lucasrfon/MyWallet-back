@@ -1,6 +1,6 @@
 import { db } from "../dbStrategy/mongo.js";
 
-export default async function validateAuth(req, res) {
+export default async function validateAuth(req, res, next) {
     const { authorization } = req.headers;
 
   const token = authorization?.replace('Bearer ', '');

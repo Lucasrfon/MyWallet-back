@@ -9,27 +9,21 @@ export async function creatUser(req, res) {
 
         await db.collection('users').insertOne({...user, password: encryptedPassword});
         res.status(201).send('Cadastro realizado com sucesso!');
+        
     } catch(error) {
         res.send('Algo de errado não está certo.');
     }
-    
 }
 
 export async function loginUser(req, res) {
     try {
         const user = req.body;
-        const validEmail = await db.collection('users').findOne({email: user.email});
-        const validPassword = validEmail ? 
-        bcrypt.compareSync(user.password, validEmail.password) : null;
-
-        if(validPassword) {
-            const token = uuid();
+        const token = uuid();
+        const validEmail = res.locals.validEmail
             
-            await db.collection('sessions').insertOne({token, userId: new ObjectId(validEmail._id), generated: Date.now()});
-            return res.status(201).send({ token });
-        } else {
-            return res.status(401).send('Senha ou email inválidos.');
-        }
+        await db.collection('sessions').insertOne({token, userId: new ObjectId(validEmail._id), generated: Date.now()});
+        return res.status(201).send({ token });
+
     } catch(error) {
         res.send('Algo de errado não está certo.');
     }

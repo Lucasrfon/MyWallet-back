@@ -1,4 +1,6 @@
 import joi from 'joi';
+import bcrypt from 'bcrypt';
+import { db, ObjectId } from "../dbStrategy/mongo.js";
 
 export default async function validateLogin(req, res, next) {
     const loginSchema = joi.object({
@@ -7,10 +9,18 @@ export default async function validateLogin(req, res, next) {
     });
     const user = req.body;
     const validation = loginSchema.validate(user);
+    const validEmail = await db.collection('users').findOne({email: user.email});
+    const validPassword = validEmail ? 
+    bcrypt.compareSync(user.password, validEmail.password) : null;
 
     if(validation.error) {
         return res.status(400).send(validation.error.details);
     }
 
+    if(!validPassword) {
+        return res.status(401).send('Senha ou email inválidos.');
+    }
+
+    res.locals.validEmail = validEmail;
     next();
 }
