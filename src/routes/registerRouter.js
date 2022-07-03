@@ -1,11 +1,12 @@
 import { Router } from 'express';
 import { deleteRegister, getRegister, postRegister, updateRegister } from '../controllers/registerController.js';
+import validateAuth from '../middlewares/validateAuth.js';
 
 const router = Router();
 
-router.get('/register', getRegister);
-router.post('/register', postRegister);
-router.put('/register', updateRegister);
-router.delete('/register', deleteRegister);
+router.get('/register', validateAuth, getRegister);
+router.post('/register', validateAuth, postRegister);
+router.put('/register', validateAuth, updateRegister);
+router.delete('/register', validateAuth, deleteRegister);
 
 export default router;
