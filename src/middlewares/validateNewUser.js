@@ -18,6 +18,5 @@ export default async function validateNewUser(req, res, next) {
         return res.status(409).send('Email em uso.');
     }
 
-    res.locals.user = user;
     next();
 }
