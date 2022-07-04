@@ -20,5 +20,5 @@ server.use(registerRouter);
 setInterval(removeTokens, fiveMinutes);
 
 server.listen(process.env.PORT, () => console.log(
-    `Server online na porta ${process.env.PORT}.`
+    `Server running on port ${process.env.PORT}.`
 ));
