@@ -3,7 +3,7 @@ import { db } from '../dbStrategy/mongo.js';
 
 export default async function validateNewUser(req, res, next) {
     const newUserSchema = joi.object({
-        name: joi.string().pattern(/^[a-zA-Z0-9]* ?[a-zA-Z0-9]*$/).required(),
+        name: joi.string().pattern(/^[a-zA-Z]* ?[a-zA-Z]*$/).required(),
         email: joi.string().email().required(),
         password: joi.string().required()
     });
